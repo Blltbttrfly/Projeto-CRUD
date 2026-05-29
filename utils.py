@@ -1,58 +1,198 @@
 def validar_titulo(titulo_livro):
-    if len(titulo_livro) <= 3:
-        print("Titulo precisa ser maior que 3 caracteres!")
+    
+    if len(titulo_livro) < 3:
+        print("O título precisa ser maior que 3 caracteres!")
         return False
+    
     else:
         return True
+
+def visualizar_titulos(livros):
     
-def visualizar_livros(livros):
-    print("Títulos disponíveis")
+    print("Livros disponíveis:")
+
     contador = 1
     for livro in livros:
-        print(f"{contador}. {livro['titulo']} {livro['autor']}")
+        print(f"{contador}. {livro['Título']} de {livro['Autor']}")
         contador += 1
 
-def cadastrar_títulos(livros):
-        while True:
-            titulo_novo = input("Título: ")
-            if titulo_novo == "":
-                print("Preencha o campo Título.")
-            else: 
-                break
-        while True:
-            autor_novo = input("Autor: ")
-            if autor_novo == "":
-                print("Preencha o campo Autor.")
-            else:
-                break
-        while True:
-            editora_novo = input("Editora: ")
-            if editora_novo == "":
-                print("Preencha o campo Editora.")
-            else:
-                break
+def cadastrar_livro(livros):
         
-        while True:
-            ano_novo = input("Ano de publicação: ")
-            if len(ano_novo) != 4:
-                print("Digite um ano válido!")
-            elif not ano_novo.isdigit:
-                print("Digite apenas números!")
-            else:
-                break
+    while True:
 
-        novo_livro = {
-                "titulo": titulo_novo,
-                "autor" : autor_novo,
-                "ano": ano_novo,
-                "editora" : editora_novo
-            }
-        livros.append(novo_livro)
+        titulo_novo = input("Digite o título: ")
+            
+        if titulo_novo == "":
+            print("Preencha o campo 'título'.")
+            
+        elif validar_titulo(titulo_novo):
+            break
 
+    while True:
 
+        autor_novo = input("Digite o nome do autor: ")
 
+        if autor_novo == "":
+            print("Preencha o campo 'nome do autor'.")
+
+        else:
+            break
         
+    while True:
+
+        editora_novo = input("Digite a editora do livro: ")
+
+        if editora_novo == "":
+            print("Preencha o campo 'editora'.")
+
+        else:
+            break
+        
+    while True:
+
+        ano_novo = input("Digite o ano de publicação: ")
+
+        if len(ano_novo) != 4:
+            print("Digite um ano válido!")
+
+        elif not ano_novo.isdigit():
+            print("Digite apenas números!")
+
+        else:
+            break
+
+    while True:
+
+        sinopse_novo = input("Digite a sinopse do livro: ")
+
+        if sinopse_novo == "":
+            print("Preencha o campo 'sinopse'.")
+
+        else:
+            break
 
 
+    novo_livro = {
+            "Título": titulo_novo,
+            "Autor" : autor_novo,
+            "Editora" : editora_novo,
+            "Ano": ano_novo,
+            "Sinopse": sinopse_novo
+        }
     
+    livros.append(novo_livro)
+
+def modificar_livro (livros):
     
+    while True:
+
+        visualizar_titulos(livros)
+
+        num_livro = input("Digite o número do livro que deseja modificar: ")
+        num_livro = int(num_livro)
+        num_escolhido = livros[num_livro - 1]
+
+        print(f"""
+            
+        📖 Livro N° {num_livro} selecionado
+            
+            Título: {num_escolhido["Título"]}
+            Autor: {num_escolhido["Autor"]}
+            Editora: {num_escolhido["Editora"]}
+            Ano: {num_escolhido["Ano"]}
+            Sinopse:{num_escolhido["Sinopse"]}
+
+            """)
+
+        print("Modifique as informações desejadas. Para manter algum dado sem modificação, pressione ENTER para pular para o próximo campo.")
+
+        novo_titulo = input(f"Digite o novo título para {num_escolhido['Título']}: ")
+        if novo_titulo == "":
+            num_escolhido["Título"] = novo_titulo
+
+        novo_autor = input(f"Digite o novo autor para {num_escolhido['Autor']}: ")
+        if novo_autor:
+            num_escolhido["Autor"] = novo_autor
+
+        novo_editora = input(f"Digite a nova editora para {num_escolhido['Editora']}: ")
+        if novo_editora:
+            num_escolhido["Editora"] = novo_editora
+
+        novo_ano = input(f"Digite o novo ano para {num_escolhido['Ano']}: ")
+        if novo_ano :
+            num_escolhido["Ano"] = novo_ano
+
+        novo_sinopse = input(f"Digite a nova sinopse para {num_escolhido['Sinopse']}: ")
+        if novo_sinopse:
+            num_escolhido["Sinopse"] = novo_sinopse
+
+
+        print(f"""
+            
+            Informações do Livro Atualizadas
+            
+            Título: {num_escolhido['Título']}
+            Autor: {num_escolhido['Autor']}
+            Editora: {num_escolhido['Editora']}
+            Ano: {num_escolhido['Ano']}
+            Sinopse: {num_escolhido['Sinopse']}
+
+            """)
+    
+def remover_livro(livros):
+
+    while True:
+
+        visualizar_titulos(livros)
+
+        num_livro = input("Digite o número do livro que deseja remover: ")
+
+        if num_livro == "":
+            print("Digite um número.")
+            return
+        
+        elif not num_livro.isdigit():
+            print("Digite apenas números.")
+            return
+            
+        num_livro = int(num_livro)
+        
+        if num_livro < 1 or num_livro > len(livros):
+            print("Livro não encontrado.")
+            return
+        
+        livro_removido = livros.pop(num_livro-1)
+
+        print(f"O livro {livro_removido['Título']} do autor {livro_removido['Autor']} foi removido com sucesso!")
+
+def ler_sinopses(livros):
+
+    while True:
+        
+        visualizar_titulos(livros)
+
+        sinopse = input("Digite o número do livro que deseja ler a sinopse: ")
+
+        if sinopse == "":
+            print("Digite o número de um livro.")
+            return
+
+        elif not sinopse.isdigit():
+            print("Digite apenas números.")
+        
+        sinopse = int(sinopse)
+
+        if sinopse < 1 or sinopse > len(livros):
+            print("Livro não encontrado")
+
+        posicao_livro = livros[sinopse-1]
+
+        print(f"""
+
+            Livro {sinopse} selecionado 📙
+            
+            Título: {posicao_livro['Título']}
+
+            Sinopse: {posicao_livro['Sinopse']}
+
+            """)

@@ -155,7 +155,7 @@ while True:
                 3. Modificar Livros
                 4. Remover Livros
                 5. Ler Sinopses
-                6. Buscar por Autor
+                6. Buscar Livro por Autor
             
                 0. Sair
           

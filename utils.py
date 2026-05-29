@@ -6,6 +6,13 @@ def validar_titulo(titulo_livro):
     
     else:
         return True
+    
+def coletar_numlivro(livros):
+    num_livro = input("Digite o número do livro: ")
+    if not num_livro.isdigit():
+        return False
+    else:
+        return True
 
 def visualizar_titulos(livros):
     
@@ -89,7 +96,10 @@ def modificar_livro (livros):
         visualizar_titulos(livros)
 
         num_livro = input("Digite o número do livro que deseja modificar: ")
-        num_livro = int(num_livro)
+        if not num_livro.isdigit():
+            print("Digite apenas números.")
+            continue
+            
         num_escolhido = livros[num_livro - 1]
 
         print(f"""
@@ -171,28 +181,47 @@ def ler_sinopses(livros):
         
         visualizar_titulos(livros)
 
-        sinopse = input("Digite o número do livro que deseja ler a sinopse: ")
+        num_livro = input("Digite o número do livro que deseja ler a sinopse: ")
 
-        if sinopse == "":
+        if num_livro == "":
             print("Digite o número de um livro.")
-            return
+            continue
 
-        elif not sinopse.isdigit():
+        elif not num_livro.isdigit():
             print("Digite apenas números.")
+            continue
         
-        sinopse = int(sinopse)
+        num_livro = int(num_livro)
 
-        if sinopse < 1 or sinopse > len(livros):
+        if num_livro < 1 or num_livro > len(livros):
             print("Livro não encontrado")
+            continue
 
-        posicao_livro = livros[sinopse-1]
+        livro_escolhido = livros[num_livro-1]
 
         print(f"""
 
-            Livro {sinopse} selecionado 📙
+            Livro {num_livro} selecionado 📙
             
-            Título: {posicao_livro['Título']}
+            Título: {livro_escolhido['Título']}
 
-            Sinopse: {posicao_livro['Sinopse']}
+            Sinopse: {livro_escolhido['Sinopse']}
 
             """)
+        break
+        
+def buscar_autor(livros):
+    autor_escolhido = input("Busca por autor: ")
+    contador = 1
+    print(f"---- LIVROS DE {autor_escolhido} ----")
+    for livro in livros:
+        
+        if livro['Autor'].upper() == autor_escolhido.upper():
+            
+            print(f"{contador}. {livro['Título']} de {autor_escolhido}")
+            contador += 1
+    if contador == 1:
+        print("Desculpe! Nenhum livro encontrado. Tente novamente.")
+
+    
+

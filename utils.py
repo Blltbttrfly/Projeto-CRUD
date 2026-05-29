@@ -213,7 +213,7 @@ def ler_sinopses(livros):
 def buscar_autor(livros):
     autor_escolhido = input("Busca por autor: ")
     contador = 1
-    print(f"---- LIVROS DE {autor_escolhido} ----")
+    print(f"LIVROS DE {autor_escolhido} 📙")
     for livro in livros:
         
         if livro['Autor'].upper() == autor_escolhido.upper():

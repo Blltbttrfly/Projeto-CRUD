@@ -1,3 +1,17 @@
+import json
+def carregar_dados():
+    dados = None
+
+    with open("dados.json", "r",encoding="utf-8") as arquivo:
+        dados = json.load(arquivo)
+        return dados
+
+def salvar_dados(livros):
+    with open("dados.json", "w",encoding="utf-8") as arquivo:
+        json.dump(livros, arquivo, indent=4)
+
+
+
 def validar_titulo(titulo_livro):
     
     if len(titulo_livro) < 3:
@@ -8,11 +22,24 @@ def validar_titulo(titulo_livro):
         return True
     
 def coletar_numlivro(livros):
-    num_livro = input("Digite o número do livro: ")
-    if not num_livro.isdigit():
-        return False
-    else:
-        return True
+    while True:
+        num_livro = input("Digite o número do livro: ")
+        if num_livro == "":
+            print("Campo não pode ficar vazio!")
+            continue
+        elif not num_livro.isdigit():
+            print("Insira somente dígitos!")
+            continue
+
+        else:
+            num_livro = int(num_livro)
+            if num_livro < 1 or num_livro > len(livros):
+                print("Número selecionado excedeu quantidade registrada na lista!")
+                continue
+            
+            else:
+                return num_livro
+
 
 def visualizar_titulos(livros):
     
@@ -91,14 +118,11 @@ def cadastrar_livro(livros):
 
 def modificar_livro (livros):
     
-    while True:
+
 
         visualizar_titulos(livros)
 
-        num_livro = input("Digite o número do livro que deseja modificar: ")
-        if not num_livro.isdigit():
-            print("Digite apenas números.")
-            continue
+        num_livro = coletar_numlivro(livros)
             
         num_escolhido = livros[num_livro - 1]
 
@@ -117,7 +141,7 @@ def modificar_livro (livros):
         print("Modifique as informações desejadas. Para manter algum dado sem modificação, pressione ENTER para pular para o próximo campo.")
 
         novo_titulo = input(f"Digite o novo título para {num_escolhido['Título']}: ")
-        if novo_titulo == "":
+        if novo_titulo:
             num_escolhido["Título"] = novo_titulo
 
         novo_autor = input(f"Digite o novo autor para {num_escolhido['Autor']}: ")
@@ -155,21 +179,7 @@ def remover_livro(livros):
 
         visualizar_titulos(livros)
 
-        num_livro = input("Digite o número do livro que deseja remover: ")
-
-        if num_livro == "":
-            print("Digite um número.")
-            return
-        
-        elif not num_livro.isdigit():
-            print("Digite apenas números.")
-            return
-            
-        num_livro = int(num_livro)
-        
-        if num_livro < 1 or num_livro > len(livros):
-            print("Livro não encontrado.")
-            return
+        num_livro = coletar_numlivro(livros)
         
         livro_removido = livros.pop(num_livro-1)
 
@@ -181,21 +191,7 @@ def ler_sinopses(livros):
         
         visualizar_titulos(livros)
 
-        num_livro = input("Digite o número do livro que deseja ler a sinopse: ")
-
-        if num_livro == "":
-            print("Digite o número de um livro.")
-            continue
-
-        elif not num_livro.isdigit():
-            print("Digite apenas números.")
-            continue
-        
-        num_livro = int(num_livro)
-
-        if num_livro < 1 or num_livro > len(livros):
-            print("Livro não encontrado")
-            continue
+        num_livro = coletar_numlivro(livros)
 
         livro_escolhido = livros[num_livro-1]
 

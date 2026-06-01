@@ -193,6 +193,10 @@ def remover_livro(livros):
 
         print(f"O livro {livro_removido['Título']} do autor {livro_removido['Autor']} foi removido com sucesso!")
 
+        continuar = input("Deseja remover outro livro? (s/n): ")
+        if continuar.lower() != "s":
+            break
+
 def ler_sinopses(livros):
 
     while True:

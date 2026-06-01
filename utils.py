@@ -118,7 +118,7 @@ def cadastrar_livro(livros):
 
 def modificar_livro (livros):
     
-
+    while True:
 
         visualizar_titulos(livros)
 
@@ -154,7 +154,12 @@ def modificar_livro (livros):
 
         novo_ano = input(f"Digite o novo ano para {num_escolhido['Ano']}: ")
         if novo_ano :
-            num_escolhido["Ano"] = novo_ano
+            if novo_ano .isdigit() and len(novo_ano)== 4:
+
+                num_escolhido["Ano"] = novo_ano
+            else:
+                print("Ano ignorado. Digite uma data de 4 dígitos.")
+
 
         novo_sinopse = input(f"Digite a nova sinopse para {num_escolhido['Sinopse']}: ")
         if novo_sinopse:
@@ -172,6 +177,9 @@ def modificar_livro (livros):
             Sinopse: {num_escolhido['Sinopse']}
 
             """)
+        continuar = input("Deseja modfificar outro livro? (s/n): ")
+        if continuar.lower() != "s":
+            break
     
 def remover_livro(livros):
 
